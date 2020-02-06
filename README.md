@@ -121,4 +121,14 @@ nodeRegistration:
 
     2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
     3. Run `sudo kubeadm join --config=kubeadm.conf`
-6. SSH back into the initial control plane node and verify nodes. `kubectl get nodes`
+6. SSH back into the initial control plane node and verify nodes. `kubectl get nodes` Notice the nodes are still `NotReady` state. This is because the CNI (container-networking-interface) hasn't been deployed, so there is no pod network set up across nodes.
+```
+[centos@ip-10-0-1-124 ~]$ kubectl get nodes
+NAME                                       STATUS   ROLES    AGE     VERSION
+ip-10-0-1-124.us-west-1.compute.internal   NotReady    master   3h40m   v1.17.2
+ip-10-0-1-181.us-west-1.compute.internal   NotReady    <none>   3h29m   v1.17.2
+ip-10-0-1-218.us-west-1.compute.internal   NotReady    master   3h32m   v1.17.2
+ip-10-0-1-39.us-west-1.compute.internal    NotReady    <none>   3h30m   v1.17.2
+ip-10-0-1-71.us-west-1.compute.internal    NotReady    master   3h34m   v1.17.2
+```
+7. Deploy the Calico CNI found in the Kubernetes steps https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ to bring the nodes into a `Ready` state.
