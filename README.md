@@ -84,7 +84,7 @@ nodeRegistration:
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
     1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes. This is the stage which the intial control-plane is scaled out to the rest of the control-plane virtual machine instances.
-    1. Create the following control plane node join config file `kubeadm.conf`
+    1. Create the following control plane node join config file `kubeadm.conf` This file is read by `kubeadm join` to provide the base configuration necessary to join an exisiting control-plane, thus, scaling it out.
 
     ```
     apiVersion: kubeadm.k8s.io/v1beta2
@@ -104,7 +104,7 @@ nodeRegistration:
     2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
     3. Run `sudo kubeadm join --config=kubeadm.conf`
 5. SSH into the rest of the worker nodes. At this point, the worker node virtual machine instances are ready to join the control plane.
-    1. Create the following worker node join config file `kubeadm.conf`
+    1. Create the following worker node join config file `kubeadm.conf`. This file is read by `kubeadm join` to provide the base configuration necessary to join an exisiting control-plane as a worker node.
 
     ```
     apiVersion: kubeadm.k8s.io/v1beta2
