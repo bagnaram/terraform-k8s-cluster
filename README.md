@@ -104,7 +104,7 @@ nodeRegistration:
     2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
     3. Run `sudo kubeadm join --config=kubeadm.conf`
 5. SSH into the rest of the worker nodes. At this point, the worker node virtual machine instances are ready to join the control plane.
-    1. Create the following worker node join config file `kubeadm.conf`. This file is read by `kubeadm join` to provide the base configuration necessary to join an exisiting control-plane as a worker node.
+    1. Create the following worker node join config file `kubeadm.conf`. This file is read by `kubeadm join` to provide the base configuration necessary to join an exisiting control-plane as a worker node. Notice the difference between this snippet below and the one above it. This snippet doesn't containtain a `certificateKey` meaning it will join as a worker node.
 
     ```
     apiVersion: kubeadm.k8s.io/v1beta2
