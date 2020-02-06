@@ -71,9 +71,9 @@ nodeRegistration:
     cloud-provider: "aws"
 ```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
-  a. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
+  1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes.
-  a. Create the following control plane node join config file `kubeadm.conf`
+  1. Create the following control plane node join config file `kubeadm.conf`
 ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
@@ -88,10 +88,10 @@ nodeRegistration:
 controlPlane:
   certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
 ```
-  b. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
-  c. Run `sudo kubeadm join --config=kubeadm.conf`
+  2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+  3. Run `sudo kubeadm join --config=kubeadm.conf`
 5. SSH into the rest of the worker nodes.
-  a. Create the following worker node join config file `kubeadm.conf`
+  1. Create the following worker node join config file `kubeadm.conf`
 ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
@@ -104,6 +104,6 @@ nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: aws
 ```
-  b. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
-  c. Run `sudo kubeadm join --config=kubeadm.conf`
+  2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+  3. Run `sudo kubeadm join --config=kubeadm.conf`
 6. SSH back into the initial control plane node and verify nodes. `kubectl get nodes`
