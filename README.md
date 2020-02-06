@@ -2,7 +2,7 @@
 
 Deployment of Kubernetes on AWS, etc via Terraform
 
-The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform. Some of the 
+The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform. 
 
 ## Prerequisites
 
