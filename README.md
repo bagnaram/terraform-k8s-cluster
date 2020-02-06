@@ -49,7 +49,7 @@ The installation is mostly standard except for the optional cloud provider confi
 
 1. SSH into one of the control plane nodes. This will be the initial bootstrap of the Kubernetes control plane.
 2. Create the following file `kubeadm.conf`. Replace `controlPlaneEndpoint` with the ELB DNS record output at the end of the terraform run. 
-```
+    ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.17.2
@@ -69,12 +69,12 @@ kind: InitConfiguration
 nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: "aws"
-```
+    ```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
-  1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
+    1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes.
-  1. Create the following control plane node join config file `kubeadm.conf`
-```
+    1. Create the following control plane node join config file `kubeadm.conf`
+    ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
@@ -87,12 +87,12 @@ nodeRegistration:
     cloud-provider: aws
 controlPlane:
   certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
-```
-  2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
-  3. Run `sudo kubeadm join --config=kubeadm.conf`
+    ```
+    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+    3. Run `sudo kubeadm join --config=kubeadm.conf`
 5. SSH into the rest of the worker nodes.
-  1. Create the following worker node join config file `kubeadm.conf`
-```
+    1. Create the following worker node join config file `kubeadm.conf`
+    ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
@@ -103,7 +103,7 @@ discovery:
 nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: aws
-```
-  2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
-  3. Run `sudo kubeadm join --config=kubeadm.conf`
+    ```
+    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+    3. Run `sudo kubeadm join --config=kubeadm.conf`
 6. SSH back into the initial control plane node and verify nodes. `kubectl get nodes`
