@@ -2,7 +2,9 @@
 
 Deployment of Kubernetes on AWS, etc via Terraform
 
-The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform. 
+The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform. Terraform is an infrastructure topology tool that creates a common schema for various cloud and infrastructure providers.
+
+
 
 ## Prerequisites
 
@@ -21,11 +23,13 @@ Terraform provides a layered infrastructure template that can be used to deploy 
 Download the terraform binary from Hashicorp.
 
 
-## Prepare infrastructure
+## Prepare infrastructure for AWS
 
 By default, this template will deploy an HA configured infrastructure:
 3 control-plane nodes
 2 worker nodes
+
+It utilizes a base image that is common throughout the infrastructure, providing true infrastructure-as-code. This functionalty can be expanded to provide flexibility to lock down images, or to even harden to CIS benchmarks.
 
 The template `variables.tf` will need to be modified to match your environment:
 1. `aws_region` to the AWS region you specify.
@@ -46,7 +50,7 @@ export AWS_SECRET_ACCESS_KEY=
 export AWS_ACCESS_KEY_ID=
 ```
 
-Simply run `terraform apply` to deploy the instances.
+Simply run `terraform apply` to deploy the instances. It will create all needed VPC, Subnet, ELB, EC2 instances, and resources needed for a base Kubernetes cluster.
 
 When the execution completes, you will be presented with the ELB public DNS name. Save this value for the next `kubeadm` section.
 
@@ -55,7 +59,7 @@ When the execution completes, you will be presented with the ELB public DNS name
 The installation is mostly standard except for the optional cloud provider configuration. In this example, I use AWS but it can be substituted also. I have referenced configuration resources found in this article https://blog.scottlowe.org/2019/08/14/setting-up-aws-integrated-kubernetes-115-cluster-kubeadm/.
 
 1. SSH into one of the control plane nodes. This will be the initial bootstrap of the Kubernetes control plane.
-2. Create the following file `kubeadm.conf`. Replace `controlPlaneEndpoint` with the ELB DNS record output at the end of the terraform run. 
+2. Create the following file `kubeadm.conf`. Replace `controlPlaneEndpoint` with the ELB DNS record output at the end of the terraform run.  This file is read by kubeadm to provide the base configuration necessary to initially deploy a control-plane.
 ```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
@@ -79,7 +83,7 @@ nodeRegistration:
 ```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
     1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
-4. SSH into the rest of the control plane nodes.
+4. SSH into the rest of the control plane nodes. This is the stage which the intial control-plane is scaled out to the rest of the control-plane virtual machine instances.
     1. Create the following control plane node join config file `kubeadm.conf`
 
     ```
@@ -97,9 +101,9 @@ nodeRegistration:
     certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
     ```
 
-    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
     3. Run `sudo kubeadm join --config=kubeadm.conf`
-5. SSH into the rest of the worker nodes.
+5. SSH into the rest of the worker nodes. At this point, the worker node virtual machine instances are ready to join the control plane.
     1. Create the following worker node join config file `kubeadm.conf`
 
     ```
@@ -115,6 +119,6 @@ nodeRegistration:
         cloud-provider: aws
     ```
 
-    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
+    2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
     3. Run `sudo kubeadm join --config=kubeadm.conf`
 6. SSH back into the initial control plane node and verify nodes. `kubectl get nodes`
