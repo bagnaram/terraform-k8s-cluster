@@ -71,7 +71,7 @@ nodeRegistration:
     cloud-provider: "aws"
 ```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
-    1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
+  1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes.
   1. Create the following control plane node join config file `kubeadm.conf`
 
