@@ -9,6 +9,7 @@ The goal of this page is to have a functional testbed kubernetes cluster that le
 ## Prerequisites
 
 * Access to cloud (ex. AWS)
+* Base image used for provisioning. https://github.com/bagnaram/packer-k8s-centos
 * Linux Machine:
   * `python` & `boto` for AWS
   * `terraform` https://www.terraform.io/
