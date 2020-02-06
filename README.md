@@ -6,8 +6,6 @@ The goal of this page is to have a functional testbed kubernetes cluster that le
 
 ## Prerequisites
 
-* Access to company VPN
-* Access to Nimbus https://devhub.eng.vmware.com/#/nimbus
 * Linux Machine:
   * `python`
   * `boto`
