@@ -51,7 +51,7 @@ Add IAM roles to the config using https://github.com/kubernetes/cloud-provider-a
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.17.2
-controlPlaneEndpoint: terraform-control-plane-elb-209007085.us-west-1.elb.amazonaws.com:6443
+controlPlaneEndpoint: terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443
 networking:
   serviceSubnet: "10.96.0.0/12"
   podSubnet: "10.244.0.0/16"
@@ -77,8 +77,8 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
   bootstrapToken:
-    token: o3dmm9.2900igrmcg23swyv
-    apiServerEndpoint: "terraform-control-plane-elb-209007085.us-west-1.elb.amazonaws.com:6443"
+    token: kedjasdal.2900igrlol23swyv
+    apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
     caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
 nodeRegistration:
   kubeletExtraArgs:
@@ -95,9 +95,9 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
   bootstrapToken:
-    token: g72rm9.7cvssyyotrhpa0sl
-    apiServerEndpoint: "terraform-control-plane-elb-2078248757.us-west-1.elb.amazonaws.com:6443"
-    caCertHashes: ["sha256:90c8f76cb25d562755129ba7e30359602100a90ea8e775f32c4b5aa6d6b934d6"]
+    token: kedjasdal.2900igrlol23swyv
+    apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
+    caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
 nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: aws
