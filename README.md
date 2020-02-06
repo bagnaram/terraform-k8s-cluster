@@ -2,19 +2,24 @@
 
 Deployment of Kubernetes on AWS, etc via Terraform
 
-The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform.
+The goal of this page is to have a functional testbed kubernetes cluster that leverages Terraform. Some of the 
 
 ## Prerequisites
 
+* Access to cloud (ex. AWS)
 * Linux Machine:
-  * `python`
-  * `boto`
+  * `python` & `boto` for AWS
   * `terraform` https://www.terraform.io/
+
+### AWS Considerations
+
+IAM roles needed for the AWS cloud provider are listed in the out-of-tree repository https://github.com/kubernetes/cloud-provider-aws These roles are included in the terraform template.
 
 ## Install Terraform
 Terraform provides a layered infrastructure template that can be used to deploy to different providers. This example will deploy a template to Amazon.
 
 Download the terraform binary from Hashicorp.
+
 
 ## Prepare infrastructure
 
@@ -40,8 +45,7 @@ When the execution completes, you will be presented with the ELB public DNS name
 
 ## Install with kubeadm
 
-
-Add IAM roles to the config using https://github.com/kubernetes/cloud-provider-aws
+The installation is mostly standard except for the optional cloud provider configuration. In this example, I use AWS but it can be substituted also. I have referenced configuration resources found in this article https://blog.scottlowe.org/2019/08/14/setting-up-aws-integrated-kubernetes-115-cluster-kubeadm/.
 
 1. SSH into one of the control plane nodes. This will be the initial bootstrap of the Kubernetes control plane.
 2. Create the following file `kubeadm.conf`. Replace `controlPlaneEndpoint` with the ELB DNS record output at the end of the terraform run. 
