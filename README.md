@@ -93,20 +93,20 @@ nodeRegistration:
   2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
   3. Run `sudo kubeadm join --config=kubeadm.conf`
 5. SSH into the rest of the worker nodes.
-  1. Create the following worker node join config file `kubeadm.conf`
+    1. Create the following worker node join config file `kubeadm.conf`
 
-  ```
-  apiVersion: kubeadm.k8s.io/v1beta2
-  kind: JoinConfiguration
-  discovery:
-  bootstrapToken:
-      token: kedjasdal.2900igrlol23swyv
-      apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
-      caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
-  nodeRegistration:
-  kubeletExtraArgs:
-      cloud-provider: aws
-  ```
+    ```
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: JoinConfiguration
+    discovery:
+    bootstrapToken:
+        token: kedjasdal.2900igrlol23swyv
+        apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
+        caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
+    nodeRegistration:
+    kubeletExtraArgs:
+        cloud-provider: aws
+    ```
 
   2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
   3. Run `sudo kubeadm join --config=kubeadm.conf`
