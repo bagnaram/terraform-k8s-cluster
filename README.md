@@ -49,7 +49,7 @@ The installation is mostly standard except for the optional cloud provider confi
 
 1. SSH into one of the control plane nodes. This will be the initial bootstrap of the Kubernetes control plane.
 2. Create the following file `kubeadm.conf`. Replace `controlPlaneEndpoint` with the ELB DNS record output at the end of the terraform run. 
-    ```
+```
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.17.2
@@ -69,7 +69,7 @@ kind: InitConfiguration
 nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: "aws"
-    ```
+```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
     1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes.
