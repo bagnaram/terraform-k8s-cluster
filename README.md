@@ -71,24 +71,24 @@ nodeRegistration:
     cloud-provider: "aws"
 ```
 3. Run `sudo kubeadm init --upload-certs --config=kubeadm.conf`
-  1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
+    1. Once this completes, capture the output of the `kubeadm init` command. There will be a control plane join command, and a worker node join command.
 4. SSH into the rest of the control plane nodes.
-  1. Create the following control plane node join config file `kubeadm.conf`
+    1. Create the following control plane node join config file `kubeadm.conf`
 
-  ```
-  apiVersion: kubeadm.k8s.io/v1beta2
-  kind: JoinConfiguration
-  discovery:
-  bootstrapToken:
-      token: kedjasdal.2900igrlol23swyv
-      apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
-      caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
-  nodeRegistration:
-  kubeletExtraArgs:
-      cloud-provider: aws
-  controlPlane:
-  certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
-  ```
+    ```
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: JoinConfiguration
+    discovery:
+    bootstrapToken:
+        token: kedjasdal.2900igrlol23swyv
+        apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
+        caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
+    nodeRegistration:
+    kubeletExtraArgs:
+        cloud-provider: aws
+    controlPlane:
+    certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
+    ```
 
   2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage.
   3. Run `sudo kubeadm join --config=kubeadm.conf`
