@@ -35,9 +35,16 @@ The template `variables.tf` will need to be modified to match your environment:
 
 By default this template will go out and select the latest AMI which tag `OS_Version` equals `CentOS`. This guide assumes the image has been created by the guide: https://github.com/bagnaram/packer-k8s-centos
 
-## Deploy Infrastructure
+## Deploy Infrastructure to AWS
 
 If you are running terraform for the first time, you will need to run `terraform plan` to syncronize any needed plugins.
+
+Source the AWS credentials that you obtain from the console:
+```
+export AWS_SESSION_TOKEN=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_ACCESS_KEY_ID=
+```
 
 Simply run `terraform apply` to deploy the instances.
 
