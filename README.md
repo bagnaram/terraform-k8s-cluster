@@ -96,10 +96,10 @@ nodeRegistration:
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
     nodeRegistration:
-    kubeletExtraArgs:
+      kubeletExtraArgs:
         cloud-provider: aws
     controlPlane:
-    certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
+      certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
     ```
 
     2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
@@ -116,7 +116,7 @@ nodeRegistration:
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
     nodeRegistration:
-    kubeletExtraArgs:
+      kubeletExtraArgs:
         cloud-provider: aws
     ```
 
