@@ -133,3 +133,9 @@ ip-10-0-1-39.us-west-1.compute.internal    NotReady    <none>   3h30m   v1.17.2
 ip-10-0-1-71.us-west-1.compute.internal    NotReady    master   3h34m   v1.17.2
 ```
 7. Deploy the Calico CNI found in the Kubernetes steps https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ to bring the nodes into a `Ready` state.
+
+## Tearing it all Down
+
+NOTE: If Kubernetes cloud provider is functioning be sure to remove any cloud resources from the cluster. This includes `Volume`, Services of type `LoadBalancer`, etc. or there will be problems removing with terraform.
+
+Simply destroy the topology by running `terraform destroy`
