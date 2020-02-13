@@ -91,7 +91,7 @@ nodeRegistration:
     apiVersion: kubeadm.k8s.io/v1beta2
     kind: JoinConfiguration
     discovery:
-    bootstrapToken:
+      bootstrapToken:
         token: kedjasdal.2900igrlol23swyv
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
@@ -111,7 +111,7 @@ nodeRegistration:
     apiVersion: kubeadm.k8s.io/v1beta2
     kind: JoinConfiguration
     discovery:
-    bootstrapToken:
+      bootstrapToken:
         token: kedjasdal.2900igrlol23swyv
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
