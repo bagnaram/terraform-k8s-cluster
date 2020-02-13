@@ -91,15 +91,15 @@ nodeRegistration:
     apiVersion: kubeadm.k8s.io/v1beta2
     kind: JoinConfiguration
     discovery:
-    bootstrapToken:
+      bootstrapToken:
         token: kedjasdal.2900igrlol23swyv
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
     nodeRegistration:
-    kubeletExtraArgs:
+      kubeletExtraArgs:
         cloud-provider: aws
     controlPlane:
-    certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
+      certificateKey: "b14fd947d50d1a9a96b9c807f03284ed3fa6469efccc984aefa707cc2b118c8a"
     ```
 
     2. Replace the `token`, `apiServerEndpoint`, `caCertHashes` with the values recorded by the `kubeadm init` stage. These need to match so that kubeadm has the credentials needed to join the pre-existing control-plane.
@@ -111,12 +111,12 @@ nodeRegistration:
     apiVersion: kubeadm.k8s.io/v1beta2
     kind: JoinConfiguration
     discovery:
-    bootstrapToken:
+      bootstrapToken:
         token: kedjasdal.2900igrlol23swyv
         apiServerEndpoint: "terraform-control-plane-elb-10124.us-west-1.elb.amazonaws.com:6443"
         caCertHashes: ["sha256:2d932d3d6f2753a082f345586bd1be479d5d0481bb1b0ce2acb00133cc6943a3"]
     nodeRegistration:
-    kubeletExtraArgs:
+      kubeletExtraArgs:
         cloud-provider: aws
     ```
 
@@ -133,3 +133,9 @@ ip-10-0-1-39.us-west-1.compute.internal    NotReady    <none>   3h30m   v1.17.2
 ip-10-0-1-71.us-west-1.compute.internal    NotReady    master   3h34m   v1.17.2
 ```
 7. Deploy the Calico CNI found in the Kubernetes steps https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ to bring the nodes into a `Ready` state.
+
+## Tearing it all Down
+
+NOTE: If Kubernetes cloud provider is functioning be sure to remove any cloud resources from the cluster. This includes `Volume`, Services of type `LoadBalancer`, etc. or there will be problems removing with terraform.
+
+Simply destroy the topology by running `terraform destroy`
